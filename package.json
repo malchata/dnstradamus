@@ -1,0 +1,45 @@
+{
+  "name": "dnstradamus",
+  "version": "1.0.0",
+  "description": "A little library that preconnects to in-viewport links for other hosts.",
+  "main": "dist/dnstradamus.js",
+  "module": "src/dnstradamus.mjs",
+  "scripts": {
+    "clean": "npx rimraf ./dist",
+    "build": "npm run clean && npx rollup -c",
+    "lint": "npx eslint ./src/**.mjs",
+    "start": "node ./http.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/malchata/DNStradamus.git"
+  },
+  "keywords": [
+    "rel",
+    "preconnect",
+    "dns-prefetch",
+    "dns",
+    "prefetching",
+    "perceived",
+    "performance",
+    "webperf"
+  ],
+  "author": "Jeremy L. Wagner <jeremy.l.wagner@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/malchata/DNStradamus/issues"
+  },
+  "homepage": "https://github.com/malchata/DNStradamus#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "eslint": "^5.13.0",
+    "express": "^4.16.4",
+    "prepack": "^0.2.54",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.1.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-copy": "^0.2.3",
+    "rollup-plugin-terser": "^4.0.4"
+  }
+}
