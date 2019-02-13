@@ -6,6 +6,7 @@
     <img src="https://jlwagner.net/ext/images/dnstradamus.jpg" alt="dnstradamus" width="800" height="400">
   </picture>
 </p>
+<p align="center">(graphic by <a href="https://github.com/flipty" rel="noopener">@flipty</a>)</p>
 <p align="center">
   <img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?label=Uncompressed" alt="Uncompressed">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?compression=gzip&label=gzip" alt="gzip">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?compression=brotli&label=brotli" alt="Brotli">
 </p>
