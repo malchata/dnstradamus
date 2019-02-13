@@ -124,7 +124,7 @@ This is only consequential if `observeChanges` is set to `true`. `MutationObserv
 
 ### `bailIfSlow`
 
-_Default: true_
+_Default: `true`_
 
 By default, if users have data saver enabled in Chrome for Android, or if their effective connection type is `2g` or `2g-slow`, DNStradamus won't do anything. If you're a devil-may-care type, you can set this to `false` and DNStradamus will do its thing regardless.
 
