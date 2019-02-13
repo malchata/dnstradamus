@@ -1,19 +1,18 @@
-# DNStradamus
+# dnstradamus
 
 <p align="center">
   <picture>
     <source srcset="https://jlwagner.net/ext/images/dnstradamus.webp" type="image/webp">
-    <img src="https://jlwagner.net/ext/images/dnstradamus.jpg" alt="DNStradamus" width="800" height="400">
+    <img src="https://jlwagner.net/ext/images/dnstradamus.jpg" alt="dnstradamus" width="800" height="400">
   </picture>
 </p>
-
 <p align="center">
-  ![](https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?label=Uncompressed) ![](https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?compression=gzip&label=gzip) ![](https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?compression=brotli&label=brotli)
-</div>
+  <img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?label=Uncompressed" alt="Uncompressed">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?compression=gzip&label=gzip" alt="gzip">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?compression=brotli&label=brotli" alt="Brotli">
+</p>
 
-## Who&mdash;er, _what_&mdash;is DNStradamus?
+## Who&mdash;er, _what_&mdash;is dnstradamus?
 
-DNStradamus is a very small prognosticating script that uses [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to find external links to other origins as they are scrolled into the viewport. As it discovers such links, it uses [`dns-prefetch`](https://www.w3.org/TR/resource-hints/#dfn-dns-prefetch) to perform an early DNS lookup for those links. Its design and function is inspired by [quicklink](https://github.com/GoogleChromeLabs/quicklink), which does something similar, except it performs [link prefetching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) instead.
+dnstradamus is a very small prognosticating script that uses [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to find external links to other origins as they are scrolled into the viewport. As it discovers such links, it uses [`dns-prefetch`](https://www.w3.org/TR/resource-hints/#dfn-dns-prefetch) to perform an early DNS lookup for those links. Its design and function is inspired by [quicklink](https://github.com/GoogleChromeLabs/quicklink), which does something similar, except it performs [link prefetching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) instead.
 
 ## Bah, why bother with DNS prefetching?
 
@@ -32,9 +31,9 @@ Furthermore, the `dns-prefetch` hint gives us a great fault-tolerant way to miti
 
 Page prefetching is an excellent solution that goes a _long_ way in improving perceived performance of page navigations. The biggest problem with it, however, is that it can be very wasteful, which is not always acceptable for people on metered data plans. quicklink mitigates this somewhat by checking to see if users have [data saver mode](https://support.google.com/chrome/answer/2392284) enabled on Chrome for Android, as well as checking the [effective connection type](https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation/effectiveType) via `navigator.connection.effectiveType`. Despite these mitigations, however, these signals are only available in Chrome.
 
-DNS lookups, on the other hand, are low risk because of the relative cheapness of them compared to prefetching entire documents. Even so, DNStradamus is configured to check for the same signals quicklink does to avoid any DNS prefetches for users who want to save data or have a slow effective connection type.
+DNS lookups, on the other hand, are low risk because of the relative cheapness of them compared to prefetching entire documents. Even so, dnstradamus is configured to check for the same signals quicklink does to avoid any DNS prefetches for users who want to save data or have a slow effective connection type.
 
-## How to use DNStradamus
+## How to use dnstradamus
 
 If you're the `npm` type, you can install it:
 
@@ -56,13 +55,13 @@ If you'd just prefer to use a script, there are scripts in both ES6 and ES5 flav
 
 ## Options
 
-Despite its small size, DNStradamus is highly configurable. Let's step through the available options:
+Despite its small size, dnstradamus is highly configurable. Let's step through the available options:
 
 ### `context`
 
 _Default: `"body"`_
 
-The context in which links are selected. This option accepts any valid CSS selector. It's useful for helping you to narrow down where DNStradamus looks for links. For example, let's say you only wanted to do DNS prefetching for external links within an element with an ID of `content`:
+The context in which links are selected. This option accepts any valid CSS selector. It's useful for helping you to narrow down where dnstradamus looks for links. For example, let's say you only wanted to do DNS prefetching for external links within an element with an ID of `content`:
 
 ```javascript
 dnstradamus({
@@ -74,7 +73,7 @@ dnstradamus({
 
 _Default: `(anchor, origin) => true`_
 
-Under the hood and apart from this, DNStradamus won't prefetch DNS for the primary origin (since it has already so that by the time DNStradamus kicks in). `include` helps you to take things further by providing a callback with an interface that provides the anchor DOM node and the origin it points to. From here, you can create your own filtering mechanism to determine what links should be considered for prefetching. Returning any expression that evaluates to `true` ensures DNStradamus will consider the link a candidate for DNS prefetching. For example, let's say you wanted to include only link elements without a class of `nonslookup`:
+Under the hood and apart from this, dnstradamus won't prefetch DNS for the primary origin (since it has already so that by the time dnstradamus kicks in). `include` helps you to take things further by providing a callback with an interface that provides the anchor DOM node and the origin it points to. From here, you can create your own filtering mechanism to determine what links should be considered for prefetching. Returning any expression that evaluates to `true` ensures dnstradamus will consider the link a candidate for DNS prefetching. For example, let's say you wanted to include only link elements without a class of `nonslookup`:
 
 ```javascript
 dnstradamus({
@@ -96,19 +95,19 @@ Whatever filtering mechanism you can come up with is up to you. The interface `i
 
 _Default: `200`_
 
-The threshold, in CSS pixels, by which links outside of the viewport will be observed. Increasing this value means DNStradamus will attempt to prefetch DNS information for external links when they're further away from the viewport.
+The threshold, in CSS pixels, by which links outside of the viewport will be observed. Increasing this value means dnstradamus will attempt to prefetch DNS information for external links when they're further away from the viewport.
 
 ### `timeout`
 
 _Default: `4000`_
 
-DNStradamus uses [`requestIdleCallback`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback) to take advantage of the browser's idle time. This is helpful in reducing jank on the main thread. If set to `0`, the browser won't attempt to use `requestIdleCallback`. If `requestIdleCallback` isn't supported, DNStradamus will perform DNS prefetching immediately.
+dnstradamus uses [`requestIdleCallback`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback) to take advantage of the browser's idle time. This is helpful in reducing jank on the main thread. If set to `0`, the browser won't attempt to use `requestIdleCallback`. If `requestIdleCallback` isn't supported, dnstradamus will perform DNS prefetching immediately.
 
 ### `effectiveTypes`
 
 _Default: `["3g", "4g"]`_
 
-This option is used to filter against the effective connection types offered by `navigator.connection.effectiveType`, which includes the values `"2g-slow"`, `"2g"`, `"3g"`, and `"4g"`. Whatever values _aren't_ in this array will cause DNStradamus to _not_ prefetch DNS information.
+This option is used to filter against the effective connection types offered by `navigator.connection.effectiveType`, which includes the values `"2g-slow"`, `"2g"`, `"3g"`, and `"4g"`. Whatever values _aren't_ in this array will cause dnstradamus to _not_ prefetch DNS information.
 
 ### `observeChanges`
 
@@ -126,7 +125,7 @@ This is only consequential if `observeChanges` is set to `true`. `MutationObserv
 
 _Default: `true`_
 
-By default, if users have data saver enabled in Chrome for Android, or if their effective connection type is `2g` or `2g-slow`, DNStradamus won't do anything. If you're a devil-may-care type, you can set this to `false` and DNStradamus will do its thing regardless.
+By default, if users have data saver enabled in Chrome for Android, or if their effective connection type is `2g` or `2g-slow`, dnstradamus won't do anything. If you're a devil-may-care type, you can set this to `false` and dnstradamus will do its thing regardless.
 
 ## Contributing
 
