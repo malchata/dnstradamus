@@ -13,7 +13,7 @@
 
 ## Who&mdash;er, _what_&mdash;is dnstradamus?
 
-dnstradamus is a very small prognosticating script that uses [Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to find external links to other origins as they are scrolled into the viewport. As it discovers such links, it uses [`dns-prefetch`](https://www.w3.org/TR/resource-hints/#dfn-dns-prefetch) to perform an early DNS lookup for those links. Its design and function is inspired by [quicklink](https://github.com/GoogleChromeLabs/quicklink), which does something similar, except it performs [link prefetching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) instead.
+dnstradamus is a very small prognosticating script that uses [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to find external links to other origins as they are scrolled into the viewport. As it discovers such links, it uses [`dns-prefetch`](https://www.w3.org/TR/resource-hints/#dfn-dns-prefetch) to perform an early DNS lookup for those links. Its design and function is inspired by [quicklink](https://github.com/GoogleChromeLabs/quicklink), which does something similar, except it performs [link prefetching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) instead.
 
 ## Bah, why bother with DNS prefetching?
 
@@ -53,6 +53,14 @@ document.addEventListener("DOMContentLoaded", function() {
 ```
 
 If you'd just prefer to use a script, there are scripts in both ES6 and ES5 flavors available in the dist folder in the repo with `.mjs` and `.js` extensions, respectively.
+
+However you use it, you need to understand that this script depends on `IntersectionObserver` to work. If used in a browser that doesn't support `IntersectionObserver`, you can polyfill it conditionally with this script:
+
+```html
+<script defer src="https://polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
+```
+
+If you don't load a polyfill for `IntersectionObserver`, dnstradamus will fail silently.
 
 ## Options
 
