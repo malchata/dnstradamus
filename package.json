@@ -1,7 +1,7 @@
 {
   "name": "dnstradamus",
-  "version": "1.0.0",
-  "description": "A little library that preconnects to in-viewport links for other hosts.",
+  "version": "1.0.1",
+  "description": "A prognosticating script that prefetches DNS information for outbound links.",
   "main": "dist/dnstradamus.js",
   "module": "src/dnstradamus.mjs",
   "scripts": {

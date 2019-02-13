@@ -1,8 +1,8 @@
 export default function (origin) {
   let linkEl = document.createElement("link");
-  linkEl.setAttribute("rel", "dns-prefetch");
-  linkEl.setAttribute("href", origin);
-  linkEl.setAttribute("crossorigin", "anonymous");
+  linkEl.rel = "dns-prefetch";
+  linkEl.href = origin;
+  linkEl.crossOrigin = "anonymous";
 
   document.head.appendChild(linkEl);
 }

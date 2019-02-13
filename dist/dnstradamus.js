@@ -12,45 +12,40 @@ function getOriginFromHref (href) {
 
 function buildLinkTag (origin) {
   let linkEl = document.createElement("link");
-  linkEl.setAttribute("rel", "dns-prefetch");
-  linkEl.setAttribute("href", origin);
-  linkEl.setAttribute("crossorigin", "anonymous");
+  linkEl.rel = "dns-prefetch";
+  linkEl.href = origin;
+  linkEl.crossOrigin = "anonymous";
 
   document.head.appendChild(linkEl);
 }
-
-/* DNStradamus v1.0.0 */
 
 function dnstradamus (userOptions) {
   // Default options merged with user supplied ones
   const options = {
     context: "body",
     include: (anchor, origin) => true,
-    threshold: 200,
     timeout: 4000,
-    effectiveTypes: ["3g", "4g"],
     observeChanges: false,
     observeRoot: "body",
-    bailIfSlow: true,
+    bailIfSlow: false,
     ...userOptions
   };
 
   const selectorString = `${options.context} a[href^="http://"],a[href^="https://"]`;
   const saveData = "connection" in navigator ? navigator.connection.saveData : false;
   const effectiveType = "connection" in navigator ? navigator.connection.effectiveType : "4g";
+  const bail = options.bailIfSlow === true && (saveData === true || /^(3|4)g$/i.test(effectiveType) === true);
 
-  let resolvedOrigins = [];
-  let bail = options.bailIfSlow === true && (saveData === true || options.effectiveTypes.indexOf(effectiveType) === -1);
+  if (("IntersectionObserver" in window && "IntersectionObserverEntry" in window) && bail === false) {
+    let resolvedOrigins = [];
 
-  if (("IntersectionObserver" in window && "IntersectionObserverEntry" in window && "intersectionRatio" in window.IntersectionObserverEntry.prototype) && bail === false) {
     let intersectionListener = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting === true || entry.intersectionRatio > 0) {
+        if (entry.isIntersecting === true) {
           let anchor = entry.target;
           let anchorOrigin = getOriginFromHref(anchor.href);
 
-          if (
-            resolvedOrigins.indexOf(anchorOrigin) === -1 && anchorOrigin.indexOf(`${document.location.protocol}//${document.location.host}`) === -1 && options.include(anchor, anchorOrigin) === true) {
+          if (resolvedOrigins.indexOf(anchorOrigin) === -1 && anchorOrigin.indexOf(`${document.location.protocol}//${document.location.host}`) === -1 && options.include(anchor, anchorOrigin) === true) {
             if (options.timeout > 0 && "requestIdleCallback" in window) {
               requestIdleCallback(() => buildLinkTag(anchorOrigin), {
                 timeout: options.timeout
@@ -66,11 +61,10 @@ function dnstradamus (userOptions) {
           anchors = anchors.filter(anchorElement => anchorElement !== anchor);
         }
       });
-    }, {
-      rootMargin: `${options.threshold}px 0%`
     });
 
-    sliceCall(document.querySelectorAll(selectorString)).forEach(anchor => intersectionListener.observe(anchor));
+    let anchors = sliceCall(document.querySelectorAll(selectorString));
+    anchors.forEach(anchor => intersectionListener.observe(anchor));
 
     if ("MutationObserver" in window && options.observeChanges === true) {
       new MutationObserver(mutations => mutations.forEach(() => {
