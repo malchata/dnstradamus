@@ -9,10 +9,14 @@
 <p align="center">(graphic by <a href="https://github.com/flipty" rel="noopener">@flipty</a>)</p>
 <p align="center">
   <strong>ESM/MJS version</strong>
+</p>
+<p align="center">
   <img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.mjs?label=Uncompressed" alt="Uncompressed">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.mjs?compression=gzip&label=gzip" alt="gzip">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.mjs?compression=brotli&label=brotli" alt="Brotli">
 </p>
 <p align="center">
   <strong>IIFE version</strong>
+</p>
+<p align="center">
   <img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?label=Uncompressed" alt="Uncompressed">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?compression=gzip&label=gzip" alt="gzip">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/master/dist/dnstradamus.min.js?compression=brotli&label=brotli" alt="Brotli">
 </p>
 
