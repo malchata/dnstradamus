@@ -1,23 +1,18 @@
 'use strict';
 
-// A little abstraction used to turn a NodeList into an array. This is useful
-// for older browsers where NodeLists don't have a forEach method.
-var sliceCall = arr => [].slice.call(arr);
-
-function getOriginFromHref (href) {
+const getOriginFromHref = href => {
   const pathArray = href.split("/");
 
   return `${pathArray[0]}//${pathArray[2]}/`;
-}
+};
 
-function buildLinkTag (origin) {
+const buildLinkTag = origin => {
   let linkEl = document.createElement("link");
   linkEl.rel = "dns-prefetch";
   linkEl.href = origin;
-  linkEl.crossOrigin = "anonymous";
 
   document.head.appendChild(linkEl);
-}
+};
 
 function dnstradamus (userOptions) {
   // Default options merged with user supplied ones
@@ -32,11 +27,8 @@ function dnstradamus (userOptions) {
   };
 
   const selectorString = `${options.context} a[href^="http://"],a[href^="https://"]`;
-  const saveData = "connection" in navigator ? navigator.connection.saveData : false;
-  const effectiveType = "connection" in navigator ? navigator.connection.effectiveType : "4g";
-  const bail = options.bailIfSlow === true && (saveData === true || /^(3|4)g$/i.test(effectiveType) === true);
 
-  if (("IntersectionObserver" in window && "IntersectionObserverEntry" in window) && bail === false) {
+  if (("IntersectionObserver" in window && "IntersectionObserverEntry" in window) && ("connection" in navigator ? navigator.connection.saveData : /^(3|4)g$/i.test("connection" in navigator ? navigator.connection.effectiveType : "4g") === false) === false) {
     let resolvedOrigins = [];
 
     let intersectionListener = new IntersectionObserver((entries, observer) => {
@@ -63,12 +55,12 @@ function dnstradamus (userOptions) {
       });
     });
 
-    let anchors = sliceCall(document.querySelectorAll(selectorString));
+    let anchors = [].slice.call(document.querySelectorAll(selectorString));
     anchors.forEach(anchor => intersectionListener.observe(anchor));
 
     if ("MutationObserver" in window && options.observeChanges === true) {
       new MutationObserver(mutations => mutations.forEach(() => {
-        sliceCall(document.querySelectorAll(selectorString)).forEach(anchor => {
+        [].slice.call(document.querySelectorAll(selectorString)).forEach(anchor => {
           if (anchors.indexOf(anchor) === -1 && resolvedOrigins.indexOf(getOriginFromHref(anchor.href)) === -1) {
             anchors.push(anchor);
             intersectionListener.observe(anchor);

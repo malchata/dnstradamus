@@ -1,6 +1,4 @@
-import sliceCall from "./slice-call";
-import getOriginFromHref from "./get-origin-from-href";
-import buildLinkTag from "./build-link-tag";
+import { getOriginFromHref, buildLinkTag } from "./helpers";
 
 export default function (userOptions) {
   // Default options merged with user supplied ones
@@ -15,11 +13,8 @@ export default function (userOptions) {
   };
 
   const selectorString = `${options.context} a[href^="http://"],a[href^="https://"]`;
-  const saveData = "connection" in navigator ? navigator.connection.saveData : false;
-  const effectiveType = "connection" in navigator ? navigator.connection.effectiveType : "4g";
-  const bail = options.bailIfSlow === true && (saveData === true || /^(3|4)g$/i.test(effectiveType) === true);
 
-  if (("IntersectionObserver" in window && "IntersectionObserverEntry" in window) && bail === false) {
+  if (("IntersectionObserver" in window && "IntersectionObserverEntry" in window) && ("connection" in navigator ? navigator.connection.saveData : false || /^(3|4)g$/i.test("connection" in navigator ? navigator.connection.effectiveType : "4g") === false) === false) {
     let resolvedOrigins = [];
 
     let intersectionListener = new IntersectionObserver((entries, observer) => {
@@ -46,12 +41,12 @@ export default function (userOptions) {
       });
     });
 
-    let anchors = sliceCall(document.querySelectorAll(selectorString));
+    let anchors = [].slice.call(document.querySelectorAll(selectorString));
     anchors.forEach(anchor => intersectionListener.observe(anchor));
 
     if ("MutationObserver" in window && options.observeChanges === true) {
       new MutationObserver(mutations => mutations.forEach(() => {
-        sliceCall(document.querySelectorAll(selectorString)).forEach(anchor => {
+        [].slice.call(document.querySelectorAll(selectorString)).forEach(anchor => {
           if (anchors.indexOf(anchor) === -1 && resolvedOrigins.indexOf(getOriginFromHref(anchor.href)) === -1) {
             anchors.push(anchor);
             intersectionListener.observe(anchor);

@@ -1,6 +1,6 @@
 {
   "name": "dnstradamus",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A prognosticating script that prefetches DNS information for outbound links.",
   "main": "dist/dnstradamus.js",
   "module": "src/dnstradamus.mjs",
@@ -8,7 +8,7 @@
     "clean": "npx rimraf ./dist",
     "build": "npm run clean && npx rollup -c",
     "lint": "npx eslint ./src/**.mjs",
-    "start": "node ./http.js"
+    "start": "npm run lint && node ./http.js"
   },
   "repository": {
     "type": "git",
@@ -31,13 +31,12 @@
   },
   "homepage": "https://github.com/malchata/DNStradamus#readme",
   "devDependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/core": "^7.3.3",
     "@babel/preset-env": "^7.3.1",
-    "eslint": "^5.13.0",
+    "eslint": "^5.14.1",
     "express": "^4.16.4",
-    "prepack": "^0.2.54",
     "rimraf": "^2.6.3",
-    "rollup": "^1.1.2",
+    "rollup": "^1.2.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-copy": "^0.2.3",
     "rollup-plugin-terser": "^4.0.4"

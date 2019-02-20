@@ -35,45 +35,33 @@
     <a rel="noopener" href="https://github.com/">Github</a>
     <button id="add-links">Add more links to DOM</button>
     <div id="new-links"></div>
+    <script src="https://polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
+    <script src="/js/dnstradamus.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        dnstradamus({
+          bailIfSlow: false,
+          observeChanges: true
+        });
+      });
+    </script>
+    <!-- Stuff for testing MutationObserver functionality -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var addLinksButton = document.getElementById("add-links");
+        var newLinksContainer = document.getElementById("new-links");
+
+        addLinksButton.addEventListener("click", function(event) {
+          var linkText = "<a rel=\"noopener\" href=\"https://twitter.com/\">Twitter</a>";
+          linkText += "<a rel=\"noopener\" href=\"https://news.google.com/\">Google News</a>";
+          linkText += "<a rel=\"noopener\" href=\"https://w3c.github.io/\">W3C on Github</a>";
+          linkText += "<a rel=\"noopener\" href=\"http://lazer109.info/\">HOT LAZER 109.1 FM</a> (non-HTTPS)";
+          linkText += "<a rel=\"noopener\" href=\"https://legendarytones.com/\">Legendary Tones</a>";
+
+          newLinksContainer.innerHTML = linkText;
+          document.body.removeChild(event.target);
+        });
+      });
+    </script>
   </body>
-  <script src="https://polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
-  <!-- Module usage pattern -->
-  <script type="module">
-    import dnstradamus from "/js/dnstradamus.min.mjs";
-
-    document.addEventListener("DOMContentLoaded", () => {
-      dnstradamus({
-        bailIfSlow: false,
-        observeChanges: true
-      });
-    });
-  </script>
-  <!-- Standard usage pattern -->
-  <script nomodule src="/js/dnstradamus.min.js"></script>
-  <script nomodule>
-    document.addEventListener("DOMContentLoaded", function() {
-      dnstradamus({
-        bailIfSlow: false,
-        observeChanges: true
-      });
-    });
-  </script>
-  <!-- Stuff for testing MutationObserver functionality -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var addLinksButton = document.getElementById("add-links");
-      var newLinksContainer = document.getElementById("new-links");
-
-      addLinksButton.addEventListener("click", function(event) {
-        var linkText = "<a rel=\"noopener\" href=\"https://twitter.com/\">Twitter</a>";
-        linkText += "<a rel=\"noopener\" href=\"https://news.google.com/\">Google News</a>";
-        linkText += "<a rel=\"noopener\" href=\"https://w3c.github.io/\">W3C on Github</a>";
-        linkText += "<a rel=\"noopener\" href=\"http://lazer109.info/\">HOT LAZER 109.1 FM</a> (non-HTTPS)";
-        linkText += "<a rel=\"noopener\" href=\"https://legendarytones.com/\">Legendary Tones</a>";
-
-        newLinksContainer.innerHTML = linkText;
-        document.body.removeChild(event.target);
-      });
-    });
-  </script>
 </html>

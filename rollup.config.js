@@ -5,7 +5,7 @@ import pkg from "./package.json";
 
 const commonTerserOptions = {
   output: {
-    preamble: `/* dnstradamus.js v${pkg.version} */`,
+    preamble: `/*dnstradamus ${pkg.version}*/`,
   },
   timings: true
 };
