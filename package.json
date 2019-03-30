@@ -1,6 +1,6 @@
 {
   "name": "dnstradamus",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A prognosticating script that prefetches DNS information for outbound links.",
   "main": "dist/dnstradamus.js",
   "module": "src/dnstradamus.mjs",
@@ -15,28 +15,29 @@
     "url": "git+ssh://git@github.com/malchata/DNStradamus.git"
   },
   "keywords": [
-    "rel",
-    "preconnect",
+    "rel=\"dns-prefetch\"",
     "dns-prefetch",
+    "dns lookup",
     "dns",
-    "prefetching",
-    "perceived",
+    "dns prefetching",
+    "perceived performance",
     "performance",
-    "webperf"
+    "webperf",
+    "web performance"
   ],
   "author": "Jeremy L. Wagner <jeremy.l.wagner@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/malchata/DNStradamus/issues"
+    "url": "https://github.com/malchata/dnstradamus/issues"
   },
-  "homepage": "https://github.com/malchata/DNStradamus#readme",
+  "homepage": "https://github.com/malchata/dnstradamus#readme",
   "devDependencies": {
-    "@babel/core": "^7.3.3",
-    "@babel/preset-env": "^7.3.1",
-    "eslint": "^5.14.1",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "eslint": "^5.16.0",
     "express": "^4.16.4",
     "rimraf": "^2.6.3",
-    "rollup": "^1.2.2",
+    "rollup": "^1.7.4",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-copy": "^0.2.3",
     "rollup-plugin-terser": "^4.0.4"

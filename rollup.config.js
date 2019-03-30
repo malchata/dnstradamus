@@ -1,14 +1,9 @@
+/* eslint-env node */
+
 import babel from "rollup-plugin-babel";
 import copy from "rollup-plugin-copy";
 import { terser } from "rollup-plugin-terser";
 import pkg from "./package.json";
-
-const commonTerserOptions = {
-  output: {
-    preamble: `/*dnstradamus ${pkg.version}*/`,
-  },
-  timings: true
-};
 
 export default [
   {
@@ -18,6 +13,18 @@ export default [
       format: "esm"
     },
     plugins: [
+      babel({
+        presets: [
+          [
+            "@babel/preset-env", {
+              targets: {
+                esmodules: true
+              },
+              loose: true
+            }
+          ]
+        ]
+      }),
       terser({
         ecma: 8,
         mangle: {
@@ -30,7 +37,7 @@ export default [
           unsafe_arrows: true,
           module: true
         },
-        ...commonTerserOptions
+        timings: true
       })
     ]
   },
@@ -59,7 +66,7 @@ export default [
           toplevel: true,
           reserved: ["dnstradamus"]
         },
-        ...commonTerserOptions
+        timings: true
       })
     ]
   },

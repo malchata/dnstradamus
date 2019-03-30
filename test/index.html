@@ -40,13 +40,11 @@
     <script>
       document.addEventListener("DOMContentLoaded", function() {
         dnstradamus({
-          bailIfSlow: false,
           observeChanges: true
         });
       });
-    </script>
-    <!-- Stuff for testing MutationObserver functionality -->
-    <script>
+
+      // Stuff for testing MutationObserver functionality
       document.addEventListener("DOMContentLoaded", function() {
         var addLinksButton = document.getElementById("add-links");
         var newLinksContainer = document.getElementById("new-links");

@@ -2,4 +2,8 @@
 .eslintrc.json
 http.js
 test
+LICENSE-MIT
 rollup.config.js
+CONTRIBUTING.md
+dist/dnstradamus.min.js
+dist/dnstradamus.min.mjs

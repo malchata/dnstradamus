@@ -1,46 +1,55 @@
 'use strict';
 
-const getOriginFromHref = href => {
-  const pathArray = href.split("/");
+function dnstradamus (options) {
+  options = options || {};
 
-  return `${pathArray[0]}//${pathArray[2]}/`;
-};
+  // Option assignments
+  const context = options.context || "body";
+  const include = options.include || ((anchor, origin) => true);
+  const timeout = "timeout" in options ? options.timeout : 4000;
+  const observeChanges = options.observeChanges || false;
 
-const buildLinkTag = origin => {
-  let linkEl = document.createElement("link");
-  linkEl.rel = "dns-prefetch";
-  linkEl.href = origin;
+  // Shorthands (these uglify a bit better)
+  const doc = document;
+  const win = window;
+  const nav = navigator;
+  const io = "IntersectionObserver";
+  const mo = "MutationObserver";
+  const ric = "requestIdleCallback";
 
-  document.head.appendChild(linkEl);
-};
+  // App specific stuff
+  const arr = [];
+  const queryDOM = selectorString => arr.slice.call(doc.querySelectorAll(selectorString || `${context} a[href^="http://"],a[href^="https://"]`));
 
-function dnstradamus (userOptions) {
-  // Default options merged with user supplied ones
-  const options = {
-    context: "body",
-    include: (anchor, origin) => true,
-    timeout: 4000,
-    observeChanges: false,
-    observeRoot: "body",
-    bailIfSlow: false,
-    ...userOptions
+  const buildLinkTag = origin => {
+    let linkEl = doc.createElement("link");
+    linkEl.href = origin;
+    linkEl.rel = "dns-prefetch";
+
+    doc.head.appendChild(linkEl);
   };
 
-  const selectorString = `${options.context} a[href^="http://"],a[href^="https://"]`;
+  const getOriginFromHref = href => {
+    const pathArray = href.split("/");
 
-  if (("IntersectionObserver" in window && "IntersectionObserverEntry" in window) && ("connection" in navigator ? navigator.connection.saveData : /^(3|4)g$/i.test("connection" in navigator ? navigator.connection.effectiveType : "4g") === false) === false) {
+    return `${pathArray[0]}//${pathArray[2]}/`;
+  };
+
+  if (io in win && `${io}Entry` in win && ("connection" in nav ? nav.connection.saveData : false) == false) {
     let resolvedOrigins = [];
 
-    let intersectionListener = new IntersectionObserver((entries, observer) => {
+    let intersectionListener = new win[io]((entries, observer) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting === true) {
+        if (entry.intersectionRatio) {
           let anchor = entry.target;
           let anchorOrigin = getOriginFromHref(anchor.href);
 
-          if (resolvedOrigins.indexOf(anchorOrigin) === -1 && anchorOrigin.indexOf(`${document.location.protocol}//${document.location.host}`) === -1 && options.include(anchor, anchorOrigin) === true) {
-            if (options.timeout > 0 && "requestIdleCallback" in window) {
-              requestIdleCallback(() => buildLinkTag(anchorOrigin), {
-                timeout: options.timeout
+          if (resolvedOrigins.indexOf(anchorOrigin) < 0 && anchorOrigin.indexOf(`${doc.location.protocol}//${doc.location.host}`) < 0 && include(anchor, anchorOrigin)) {
+            if (timeout && ric in win) {
+              win[ric](() => {
+                buildLinkTag(anchorOrigin);
+              }, {
+                timeout
               });
             } else {
               buildLinkTag(anchorOrigin);
@@ -50,23 +59,30 @@ function dnstradamus (userOptions) {
           }
 
           observer.unobserve(anchor);
-          anchors = anchors.filter(anchorElement => anchorElement !== anchor);
+          anchors = anchors.filter(anchorElement => anchorElement != anchor);
+
+          if (!anchors.length && !observeChanges) {
+            intersectionListener.disconnect();
+          }
         }
       });
     });
 
-    let anchors = [].slice.call(document.querySelectorAll(selectorString));
-    anchors.forEach(anchor => intersectionListener.observe(anchor));
+    let anchors = queryDOM();
 
-    if ("MutationObserver" in window && options.observeChanges === true) {
-      new MutationObserver(mutations => mutations.forEach(() => {
-        [].slice.call(document.querySelectorAll(selectorString)).forEach(anchor => {
-          if (anchors.indexOf(anchor) === -1 && resolvedOrigins.indexOf(getOriginFromHref(anchor.href)) === -1) {
+    for (let anchorIndex in anchors) {
+      intersectionListener.observe(anchors[anchorIndex]);
+    }
+
+    if (mo in win && observeChanges) {
+      new win[mo](mutations => {
+        queryDOM().forEach(anchor => {
+          if (anchors.indexOf(anchor) < 0 && resolvedOrigins.indexOf(getOriginFromHref(anchor.href)) < 0) {
             anchors.push(anchor);
             intersectionListener.observe(anchor);
           }
         });
-      })).observe(document.querySelector(options.observeRoot), {
+      }).observe(queryDOM(context)[0], {
         childList: true,
         subtree: true
       });
