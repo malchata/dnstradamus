@@ -10,5 +10,5 @@ const htdocs = path.join(__dirname, "test");
 app.use(express.static(htdocs));
 app.listen(8080);
 
-console.log("Lazy loading tests up and running at http://localhost:8080/");
+console.log("dnstradamus test up and running at http://localhost:8080/");
 console.log("Press Ctrl+C to quit.");

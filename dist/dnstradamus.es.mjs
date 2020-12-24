@@ -1,25 +1,20 @@
-'use strict';
-
 function dnstradamus (options) {
   options = options || {};
 
   // Option assignments
   const context = options.context || "body";
   const include = options.include || ((anchor, origin) => true);
-  const timeout = "timeout" in options ? options.timeout : 4000;
   const observeChanges = options.observeChanges || false;
 
   // Shorthands (these uglify a bit better)
   const doc = document;
   const win = window;
-  const nav = navigator;
   const io = "IntersectionObserver";
   const mo = "MutationObserver";
   const ric = "requestIdleCallback";
 
   // App specific stuff
-  const arr = [];
-  const queryDOM = selectorString => arr.slice.call(doc.querySelectorAll(selectorString || `${context} a[href^="http://"],a[href^="https://"]`));
+  const queryDOM = selectorString => [].slice.call(doc.querySelectorAll(selectorString || `${context} a[href^="http://"],a[href^="https://"]`));
 
   const buildLinkTag = origin => {
     let linkEl = doc.createElement("link");
@@ -35,7 +30,7 @@ function dnstradamus (options) {
     return `${pathArray[0]}//${pathArray[2]}/`;
   };
 
-  if (io in win && `${io}Entry` in win && ("connection" in nav ? nav.connection.saveData : false) == false) {
+  if (io in win && `${io}Entry` in win && win.matchMedia("(prefers-reduced-data: no-preference)").matches) {
     let resolvedOrigins = [];
 
     let intersectionListener = new win[io]((entries, observer) => {
@@ -45,11 +40,9 @@ function dnstradamus (options) {
           let anchorOrigin = getOriginFromHref(anchor.href);
 
           if (resolvedOrigins.indexOf(anchorOrigin) < 0 && anchorOrigin.indexOf(`${doc.location.protocol}//${doc.location.host}`) < 0 && include(anchor, anchorOrigin)) {
-            if (timeout && ric in win) {
+            if (ric in win) {
               win[ric](() => {
                 buildLinkTag(anchorOrigin);
-              }, {
-                timeout
               });
             } else {
               buildLinkTag(anchorOrigin);
@@ -90,4 +83,4 @@ function dnstradamus (options) {
   }
 }
 
-module.exports = dnstradamus;
+export default dnstradamus;

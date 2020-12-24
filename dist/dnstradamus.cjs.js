@@ -1,4 +1,6 @@
-export default function (options) {
+'use strict';
+
+function dnstradamus (options) {
   options = options || {};
 
   // Option assignments
@@ -82,3 +84,5 @@ export default function (options) {
     }
   }
 }
+
+module.exports = dnstradamus;

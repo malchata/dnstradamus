@@ -1,14 +1,14 @@
 {
   "name": "dnstradamus",
-  "version": "1.1.0",
-  "description": "A prognosticating script that prefetches DNS information for outbound links.",
-  "main": "dist/dnstradamus.js",
-  "module": "src/dnstradamus.mjs",
+  "version": "1.2.0",
+  "description": "A prognosticating client-side DNS prefetcher for outbound links.",
+  "main": "dist/dnstradamus.cjs.js",
+  "module": "dist/dnstradamus.es.mjs",
   "scripts": {
-    "clean": "npx rimraf ./dist",
+    "clean": "rm -rf ./dist",
     "build": "npm run clean && npx rollup -c",
     "lint": "npx eslint ./src/**.mjs",
-    "start": "npm run lint && node ./http.js"
+    "test": "npm run lint && npm run build && node ./http.js"
   },
   "repository": {
     "type": "git",
@@ -25,21 +25,23 @@
     "webperf",
     "web performance"
   ],
-  "author": "Jeremy L. Wagner <jeremy.l.wagner@gmail.com>",
+  "author": "Jeremy L. Wagner <jeremy@jeremy.codes>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/malchata/dnstradamus/issues"
   },
   "homepage": "https://github.com/malchata/dnstradamus#readme",
   "devDependencies": {
-    "@babel/core": "^7.10.3",
-    "@babel/preset-env": "^7.10.3",
-    "eslint": "^7.3.0",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "eslint": "^7.16.0",
     "express": "^4.17.1",
-    "rimraf": "^3.0.2",
-    "rollup": "^2.17.1",
+    "rollup": "^2.35.1",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-copy": "^3.3.0",
-    "rollup-plugin-terser": "^6.1.0"
-  }
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "files": [
+    "dist"
+  ]
 }

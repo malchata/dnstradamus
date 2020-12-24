@@ -3,7 +3,7 @@
 <p align="center">
   <picture>
     <source srcset="https://jlwagner.net/ext/images/dnstradamus.webp" type="image/webp">
-    <img src="https://jlwagner.net/ext/images/dnstradamus.jpg" alt="dnstradamus" width="800" height="400" style="max-height: auto; height: auto; max-width: 100%;">
+    <img src="https://jlwagner.net/ext/images/dnstradamus.jpg" alt="dnstradamus" width="800" height="400" style="height: auto; max-width: 100%;">
   </picture>
 </p>
 <p align="center">(graphic by <a href="https://github.com/flipty" rel="noopener">@flipty</a>)</p>
@@ -26,7 +26,7 @@ dnstradamus is a very small script that uses [`dns-prefetch`](https://www.w3.org
 
 ## Bah, why bother with DNS prefetching?
 
-DNS lookup times are undoubtedly reduced by redundant DNS caches in your browser, operating system, and many layers beyond. Public DNS servers such as Cloudflare's [1.1.1.1](https://1.1.1.1/) and [Google's public DNS](https://developers.google.com/speed/public-dns/) also offer very fast resolution that help to make the internet snappier for everyone everywhere. That said, sometimes DNS lookups can still take longer than we'd like.
+DNS lookup times are undoubtedly reduced by redundant DNS caches in your browser, operating system, and many layers beyond. Public DNS servers such as Cloudflare's [1.1.1.1](https://1.1.1.1/) and [Google's public DNS](https://developers.google.com/speed/public-dns/) also offer very fast resolution that help to make the web snappier for everyone everywhere. That said, sometimes DNS lookups can still take longer than we'd like.
 
 <p align="center">
   <picture>
@@ -41,7 +41,7 @@ DNS lookup times are undoubtedly reduced by redundant DNS caches in your browser
 
 Page prefetching goes a _long_ way toward improving perceived performance. Yet, link prefetching _can_ be wasteful, which is not always acceptable for people on metered data plans. quicklink mitigates this somewhat by checking to see if users have [data saver mode](https://support.google.com/chrome/answer/2392284) enabled on Chrome for Android, as well as checking the Network Information API's [effective connection type](https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation/effectiveType). Despite these mitigations, however, these signals are only available in Chrome.
 
-On the other hand, speculative DNS lookups are low risk because of the relative cheapness of them compared to prefetching documents. Even so, dnstradamus is configured to check if data saver mode is enabled to avoid any DNS prefetching for those who explicitly want to minimize data usage.
+On the other hand, speculative DNS lookups are low risk because of the relative cheapness of them compared to prefetching documents.
 
 ## How to use dnstradamus
 
@@ -76,7 +76,7 @@ If you don't load a polyfill for `IntersectionObserver`, dnstradamus will fail s
 
 ## Options
 
-Despite its small size, dnstradamus is highly configurable. Let's step through the available options:
+dnstradamus has a few options:
 
 ### `context`
 
@@ -90,17 +90,17 @@ dnstradamus({
 });
 ```
 
-This context should point to a unique element. If you're not sure what you're doing, the default works just fine.
+This context should point to a unique element. If you're not sure if you should specify anything here, leaving it undefined is okay.
 
 ### `include`
 
 _Default: `(anchor, origin) => true`_
 
-If you want to restrict what `<a>` elements dnstradamus prefetches DNS info for, `include` helps you to do that by providing a callback. This callback's interface includes the anchor element itself, as well as the origin it points to. From here, you can create your own filtering mechanism to determine what links should be considered for prefetching. Returning any expression that evaluates to `true` will include the link's origin for DNS prefetching. For example, let's say you wanted to exclude anchor elements with a class of `nolookup` from DNS prefetching:
+If you want to restrict what `<a>` elements dnstradamus prefetches DNS info for, `include` helps you to do that by providing a filter. This filter's interface includes the anchor element itself, as well as the origin it points to. From here, you can create your own filtering logic to determine what links should have DNS information prefetched for. Returning any expression that evaluates to `true` will include the link's origin for DNS prefetching. For example, let's say you wanted to exclude anchor elements with a `data-nolookup` attribute from DNS prefetching:
 
 ```javascript
 dnstradamus({
-  include: (anchor, origin) => !anchor.classList.contains("nolookup")
+  include: (anchor, origin) => !("nolookup" in anchor.dataset)
 });
 ```
 
@@ -114,25 +114,17 @@ dnstradamus({
 
 The interface `include` provides should be flexible enough to let you figure out what's best for your application.
 
-### `timeout`
-
-_Default: `4000`_
-
-dnstradamus uses `requestIdleCallback` to take advantage of the browser's idle time. The `timeout` value is the deadline (in milliseconds) by which the browser _must_ perform a DNS prefetch for a matching link. If set to `0` or if `requestIdleCallback` isn't supported, dnstradamus will perform DNS prefetching immediately when a link enters the viewport.
-
 ### `observeChanges`
 
 _Default: `false`_
 
-Flipping this to `true` will invoke a `MutationObserver` to look for new links added to the DOM after initialization. This is useful for single page applications where large swaths of the DOM can change. When in doubt, or in settings where client-side routing isn't used, don't set this to `true`.
+Flipping this to `true` creates a `MutationObserver` to look for new links added to the DOM after initialization. This is useful for single page applications where large swaths of the DOM can change. When in doubt&mdash;or in settings where client-side routing isn't used&mdash;don't set this to `true`.
 
 _**Note:** The `context` option also restricts the scope of the mutation observer!_
 
-## Contributing
-
-Please view [`CONTRIBUTING.md`](https://github.com/malchata/dnstradamus/blob/master/CONTRIBUTING.md) for details on contributing code to this project.
-
 ## Special thanks
+
+Thanks to my pal Dave ([@flipty](https://github.com/flipty)] for the neat graphic. Cheers, friend.
 
 Thank you to [BrowserStack](https://www.browserstack.com/) for graciously providing free cross-platform browser testing services!
 [![BrowserStack](https://res.cloudinary.com/drp9iwjqz/image/upload/f_auto,q_auto/v1527175969/browserstack_txnmf8.png)](https://www.browserstack.com/)

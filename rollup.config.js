@@ -5,9 +5,12 @@ import copy from "rollup-plugin-copy";
 import { terser } from "rollup-plugin-terser";
 import pkg from "./package.json";
 
+const input = "./src/dnstradamus.mjs";
+
 export default [
+  // Uglified ESM build
   {
-    input: pkg.module,
+    input,
     output: {
       file: "dist/dnstradamus.min.mjs",
       format: "esm"
@@ -41,8 +44,9 @@ export default [
       })
     ]
   },
+  // Uglified IIFE (browser) build
   {
-    input: pkg.module,
+    input,
     output: {
       name: "dnstradamus",
       file: "dist/dnstradamus.min.js",
@@ -70,11 +74,22 @@ export default [
       })
     ]
   },
+  // ESM build
   {
-    input: pkg.module,
+    input,
+    output: {
+      file: pkg.module,
+      format: "esm",
+      exports: "default"
+    }
+  },
+  // CommonJS build
+  {
+    input,
     output: {
       file: pkg.main,
-      format: "cjs"
+      format: "cjs",
+      exports: "default"
     },
     plugins: [
       copy({
