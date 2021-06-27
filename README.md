@@ -1,26 +1,11 @@
 # dnstradamus
 
-<p align="center">
+<div align="center">
   <picture>
     <source srcset="https://jlwagner.net/ext/images/dnstradamus.webp" type="image/webp">
-    <img src="https://jlwagner.net/ext/images/dnstradamus.jpg" alt="dnstradamus" width="800" height="400" style="height: auto; max-width: 100%;">
+    <img src="https://jlwagner.net/ext/images/dnstradamus.jpg" alt="dnstradamus" width="800" height="400" style="height: 100%; max-width: 100%;">
   </picture>
-</p>
-<p align="center">(graphic by <a href="https://github.com/flipty" rel="noopener">@flipty</a>)</p>
-<p align="center">
-  <strong>ES5 (.js) version</strong>
-</p>
-<p align="center">
-  <img src="https://img.badgesize.io/malchata/dnstradamus/main/dist/dnstradamus.min.js?label=Uncompressed" alt="Uncompressed">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/main/dist/dnstradamus.min.js?compression=gzip&label=gzip" alt="gzip">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/main/dist/dnstradamus.min.js?compression=brotli&label=brotli" alt="Brotli">
-</p>
-<p align="center">
-  <strong>ES6 (.mjs) version</strong>
-</p>
-<p align="center">
-  <img src="https://img.badgesize.io/malchata/dnstradamus/main/dist/dnstradamus.min.mjs?label=Uncompressed" alt="Uncompressed">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/main/dist/dnstradamus.min.mjs?compression=gzip&label=gzip" alt="gzip">&nbsp;<img src="https://img.badgesize.io/malchata/dnstradamus/main/dist/dnstradamus.min.mjs?compression=brotli&label=brotli" alt="Brotli">
-</p>
-
-## Who&mdash;er, _what_&mdash;is dnstradamus?
+</div>
 
 dnstradamus is a very small script that uses [`dns-prefetch`](https://www.w3.org/TR/resource-hints/#dfn-dns-prefetch) to perform early DNS lookups links to external sites. It uses [`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to monitor `<a>` elements as they are scrolled into the viewport, as well as [`requestIdleCallback`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback) to take advantage of idle browser time to minimize jank. dnstradamus is inspired by [quicklink](https://github.com/GoogleChromeLabs/quicklink), which performs [link prefetching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Link_prefetching_FAQ) rather than DNS lookups.
 
@@ -31,7 +16,7 @@ DNS lookup times are undoubtedly reduced by redundant DNS caches in your browser
 <p align="center">
   <picture>
     <source srcset="https://jlwagner.net/ext/images/nslookup.webp" type="image/webp">
-    <img src="https://jlwagner.net/ext/images/nslookup.png" alt="A breakdown of response timings as shown in Chrome DevTools, with DNS lookup taking 92.27 ms in this example." width="846" height="158" style="height: auto; max-width: 100%;">
+    <img src="https://jlwagner.net/ext/images/nslookup.png" alt="A breakdown of response timings as shown in Chrome DevTools, with DNS lookup taking 92.27 ms in this example." width="846" height="158" style="height: 100%; max-width: 100%;">
   </picture>
 </p>
 

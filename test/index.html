@@ -35,29 +35,22 @@
     <a rel="noopener" href="https://github.com/">Github</a>
     <button id="add-links">Add more links to DOM</button>
     <div id="new-links"></div>
-    <script src="https://polyfill.io/v2/polyfill.min.js?features=IntersectionObserver"></script>
-    <script src="/js/dnstradamus.min.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function() {
+      import("/js/dnstradamus.es.mjs").then(({ dnstradamus }) => {
         dnstradamus({
           observeChanges: true
         });
-      });
 
-      // Stuff for testing MutationObserver functionality
-      document.addEventListener("DOMContentLoaded", function() {
-        var addLinksButton = document.getElementById("add-links");
-        var newLinksContainer = document.getElementById("new-links");
+        document.getElementById("add-links").addEventListener("click", ({ target }) => {
+          document.body.removeChild(target);
 
-        addLinksButton.addEventListener("click", function(event) {
           var linkText = "<a rel=\"noopener\" href=\"https://twitter.com/\">Twitter</a>";
           linkText += "<a rel=\"noopener\" href=\"https://news.google.com/\">Google News</a>";
           linkText += "<a rel=\"noopener\" href=\"https://w3c.github.io/\">W3C on Github</a>";
           linkText += "<a rel=\"noopener\" href=\"http://thecureforhiccups.com/\">The Cure for Hiccups</a> (non-HTTPS)";
           linkText += "<a rel=\"noopener\" href=\"https://legendarytones.com/\">Legendary Tones</a>";
 
-          newLinksContainer.innerHTML = linkText;
-          document.body.removeChild(event.target);
+          document.getElementById("new-links").innerHTML = linkText;
         });
       });
     </script>

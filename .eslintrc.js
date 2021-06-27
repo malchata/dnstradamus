@@ -1,19 +1,23 @@
-{
+/* eslint-env node */
+
+module.exports = {
   "env": {
     "browser": true,
-    "es6": true
+    "es2021": true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 12,
     "sourceType": "module"
   },
+  "plugins": [
+    "@typescript-eslint"
+  ],
   "rules": {
-    "no-unused-vars": [
-      "error", {
-        "args": "none"
-      }
-    ],
     "indent": [
       "error",
       2
@@ -31,4 +35,4 @@
       "always"
     ]
   }
-}
+};
