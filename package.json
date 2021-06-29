@@ -1,15 +1,20 @@
 {
   "name": "dnstradamus",
+  "type": "module",
   "version": "1.3.0",
   "description": "A prognosticating client-side DNS prefetcher for outbound links.",
-  "main": "dist/dnstradamus.cjs.js",
-  "module": "dist/dnstradamus.es.mjs",
+  "source": "src/dnstradamus.ts",
+  "exports": "dist/dnstradamus.mjs",
+  "main": "dist/dnstradamus.cjs",
+  "module": "dist/dnstradamus.js",
+  "unpkg": "dist/dnstradamus.umd.js",
+  "types": "dist/dnstradamus.d.ts",
   "scripts": {
     "clean": "rm -rf ./dist",
-    "build": "npm run clean && npx rollup -c && npm run copy",
-    "copy": "cp -v dist/dnstradamus.es.mjs ./test/js",
-    "dev": "npm run clean && npx rollup -c -w",
-    "lint": "npx eslint ./src/**.ts",
+    "build": "npm run clean && npx microbundle && npm run copy",
+    "copy": "cp -v dist/dnstradamus.mjs ./test/js",
+    "dev": "npm run clean && npx microbundle watch",
+    "lint": "npx eslint ./src/**.ts ./src/**/*.ts",
     "test": "npm run lint && npm run build && node ./http.js"
   },
   "repository": {
@@ -35,15 +40,13 @@
   },
   "homepage": "https://github.com/malchata/dnstradamus#readme",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^19.0.0",
-    "@rollup/plugin-typescript": "^8.2.1",
-    "@types/requestidlecallback": "^0.3.1",
-    "@typescript-eslint/eslint-plugin": "^4.28.0",
-    "@typescript-eslint/parser": "^4.28.0",
+    "@types/requestidlecallback": "^0.3.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
     "eslint": "^7.29.0",
     "express": "^4.17.1",
-    "rollup": "^2.52.3",
-    "tslib": "^2.3.0",
+    "microbundle": "^0.13.3",
+    "network-information-types": "^0.1.0",
     "typescript": "^4.3.4"
   },
   "files": [

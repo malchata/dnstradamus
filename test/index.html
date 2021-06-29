@@ -36,7 +36,7 @@
     <button id="add-links">Add more links to DOM</button>
     <div id="new-links"></div>
     <script>
-      import("/js/dnstradamus.es.mjs").then(({ dnstradamus }) => {
+      import("/js/dnstradamus.mjs").then(({ dnstradamus }) => {
         dnstradamus({
           observeChanges: true
         });
@@ -44,13 +44,24 @@
         document.getElementById("add-links").addEventListener("click", ({ target }) => {
           document.body.removeChild(target);
 
-          var linkText = "<a rel=\"noopener\" href=\"https://twitter.com/\">Twitter</a>";
-          linkText += "<a rel=\"noopener\" href=\"https://news.google.com/\">Google News</a>";
-          linkText += "<a rel=\"noopener\" href=\"https://w3c.github.io/\">W3C on Github</a>";
-          linkText += "<a rel=\"noopener\" href=\"http://thecureforhiccups.com/\">The Cure for Hiccups</a> (non-HTTPS)";
-          linkText += "<a rel=\"noopener\" href=\"https://legendarytones.com/\">Legendary Tones</a>";
+          const newLinkContainer = document.getElementById("new-links");
+          const anchors = [
+            ["https://twitter.com/", "Twitter"],
+            ["https://news.google.com/", "Google News"],
+            ["https://w3c.github.io/", "W3C on Github"],
+            ["http://thecureforhiccups.com/", "The Cure for Hiccups (non-HTTPS)"],
+            ["https://legendarytones.com/", "Legendary Tones"],
+            ["https://jeremy.codes/", "jeremy.codes (should not prefetch again)"]
+          ];
 
-          document.getElementById("new-links").innerHTML = linkText;
+          for (const [ anchorUrl, anchorText ] of anchors) {
+            const anchor = document.createElement("a");
+            anchor.rel = "noopener";
+            anchor.href = anchorUrl;
+            anchor.innerText = anchorText;
+
+            newLinkContainer.appendChild(anchor);
+          }
         });
       });
     </script>

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
     "allowJs": true,
     "checkJs": true,
     "outDir": "./dist",
@@ -11,9 +11,6 @@
     "alwaysStrict": true,
     "noUnusedParameters": false,
     "moduleResolution": "node",
-    "rootDirs": [
-      "./src"
-    ],
     "esModuleInterop": true,
     "inlineSourceMap": false,
     "inlineSources": false,

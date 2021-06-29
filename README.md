@@ -33,15 +33,15 @@ On the other hand, speculative DNS lookups are low risk because of the relative 
 If you're the `npm` sort, you can install it:
 
 ```
-npm install dnstradamus
+npm i dnstradamus --save
 ```
 
 From there, it's not much trouble to get up and running:
 
 ```javascript
-import dnstradamus from "dnstradamus";
+import { dnstradamus } from "dnstradamus";
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   // Read below for more options
   dnstradamus({
     observeChanges: true
@@ -79,9 +79,9 @@ This context should point to a unique element. If you're not sure if you should 
 
 ### `include`
 
-_Default: `(anchor, origin) => true`_
+_Default: `(anchor:HTMLAnchorElement, origin:string) => true`_
 
-If you want to restrict what `<a>` elements dnstradamus prefetches DNS info for, `include` helps you to do that by providing a filter. This filter's interface includes the anchor element itself, as well as the origin it points to. From here, you can create your own filtering logic to determine what links should have DNS information prefetched for. Returning any expression that evaluates to `true` will include the link's origin for DNS prefetching. For example, let's say you wanted to exclude anchor elements with a `data-nolookup` attribute from DNS prefetching:
+If you want to restrict what `HTMLAnchorElement`s dnstradamus will perform DNS lookups on, `include` helps you to do that by providing a filter. This filter's interface includes the HTMLAnchorElement` itself, as well as the origin it points to. From here, you can create your own filtering logic to decide what links should be observed. Returning any expression that evaluates to `true` will include the link's origin for DNS prefetching. For example, let's say you wanted to exclude anchor elements with a `data-nolookup` attribute from DNS prefetching:
 
 ```javascript
 dnstradamus({
