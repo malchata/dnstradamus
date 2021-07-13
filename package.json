@@ -1,24 +1,32 @@
 {
   "name": "dnstradamus",
-  "version": "1.2.0",
+  "type": "module",
+  "version": "1.3.0",
   "description": "A prognosticating client-side DNS prefetcher for outbound links.",
-  "main": "dist/dnstradamus.cjs.js",
-  "module": "dist/dnstradamus.es.mjs",
+  "source": "src/dnstradamus.ts",
+  "exports": "dist/dnstradamus.mjs",
+  "main": "dist/dnstradamus.cjs",
+  "module": "dist/dnstradamus.js",
+  "unpkg": "dist/dnstradamus.umd.js",
+  "types": "dist/dnstradamus.d.ts",
   "scripts": {
     "clean": "rm -rf ./dist",
-    "build": "npm run clean && npx rollup -c",
-    "lint": "npx eslint ./src/**.mjs",
+    "build": "npm run clean && npx microbundle && npm run copy",
+    "copy": "cp -v dist/dnstradamus.mjs ./test/js",
+    "dev": "npm run clean && npx microbundle watch",
+    "lint": "npx eslint ./src/**.ts ./src/**/*.ts",
     "test": "npm run lint && npm run build && node ./http.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/malchata/DNStradamus.git"
+    "url": "git+ssh://git@github.com/malchata/dnstradamus.git"
   },
   "keywords": [
     "rel=\"dns-prefetch\"",
     "dns-prefetch",
     "dns lookup",
     "dns",
+    "nslookup",
     "dns prefetching",
     "perceived performance",
     "performance",
@@ -32,14 +40,13 @@
   },
   "homepage": "https://github.com/malchata/dnstradamus#readme",
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
-    "eslint": "^7.16.0",
+    "@types/requestidlecallback": "^0.3.2",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.29.0",
     "express": "^4.17.1",
-    "rollup": "^2.35.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-copy": "^3.3.0",
-    "rollup-plugin-terser": "^7.0.2"
+    "microbundle": "^0.13.3",
+    "typescript": "^4.3.4"
   },
   "files": [
     "dist"
