@@ -67,7 +67,7 @@ dnstradamus has a few options:
 
 _Default: `"body"`_
 
-The context in which links are selected. This option accepts any valid CSS selector. It's useful for helping you to narrow down where dnstradamus looks for links. For example, let's say you only wanted to do DNS prefetching for external links within an element with an ID of `content`:
+The context in which links are selected. This option accepts any valid CSS selector. It's useful for helping you to narrow down where dnstradamus looks for links. For example, let's say you only wanted to do DNS prefetching for external links within an element with an `id` of `content`:
 
 ```javascript
 dnstradamus({
@@ -81,7 +81,7 @@ This context should point to a unique element. If you're not sure if you should 
 
 _Default: `(anchor:HTMLAnchorElement, origin:string) => true`_
 
-If you want to restrict what `HTMLAnchorElement`s dnstradamus will perform DNS lookups on, `include` helps you to do that by providing a filter. This filter's interface includes the HTMLAnchorElement` itself, as well as the origin it points to. From here, you can create your own filtering logic to decide what links should be observed. Returning any expression that evaluates to `true` will include the link's origin for DNS prefetching. For example, let's say you wanted to exclude anchor elements with a `data-nolookup` attribute from DNS prefetching:
+If you want to restrict what `HTMLAnchorElement`s dnstradamus will perform DNS lookups on, `include` helps you to do that by providing a filter. This filter's interface includes the `HTMLAnchorElement` itself, as well as the origin it points to. From here, you can create your own filtering logic to decide what links should be observed. Returning any expression that evaluates to `true` will include the link's origin for DNS prefetching. For example, let's say you wanted to exclude anchor elements with a `data-nolookup` attribute from DNS prefetching:
 
 ```javascript
 dnstradamus({
